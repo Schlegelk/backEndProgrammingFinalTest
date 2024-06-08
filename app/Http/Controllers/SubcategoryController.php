@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class SubcategoryController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $subcategories = Subcategory::all();
 
         return response()->json([
-            'data' => $categories
+            'data' => $subcategories
         ]);
     }
 
@@ -48,7 +48,8 @@ class CategoryController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'nama_kategori' => 'required',
+            'id_kategori' => 'required',
+            'nama_subkategori' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
@@ -69,20 +70,20 @@ class CategoryController extends Controller
             $input['gambar'] = $nama_gambar;
         }
 
-        $category = Category::create($input);
+        $Subcategory = Subcategory::create($input);
 
         return response()->json([
-            'data' => $category
+            'data' => $Subcategory
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Subcategory  $Subcategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Subcategory $Subcategory)
     {
         //
     }
@@ -90,10 +91,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Subcategory  $Subcategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Subcategory $Subcategory)
     {
         //
     }
@@ -102,13 +103,13 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Subcategory  $Subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Subcategory $Subcategory)
     {
         $validator = Validator::make($request->all(), [
-            'nama_kategori' => 'required',
+            'nama_subkategori' => 'required',
             'deskripsi' => 'required'
         ]);
 
@@ -122,7 +123,7 @@ class CategoryController extends Controller
         $input = $request->all();
         
         if($request->has('gambar')) {
-            File::delete('uploads/' . $category->gambar);
+            File::delete('uploads/' . $Subcategory->gambar);
             $gambar = $request->file('gambar');
             $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
             $gambar->move('uploads', $nama_gambar);
@@ -131,24 +132,24 @@ class CategoryController extends Controller
             unset($input['gambar']);
         }
 
-        $category->update($input);
+        $Subcategory->update($input);
 
         return response()->json([
             'message' => 'success',
-            'data' => $category
+            'data' => $Subcategory
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Subcategory  $Subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Subcategory $Subcategory)
     {
-        File::delete('uploads/' . $category->gambar);
-        $category->delete();
+        File::delete('uploads/' . $Subcategory->gambar);
+        $Subcategory->delete();
 
         return response()->json([
             'message' => 'success'
