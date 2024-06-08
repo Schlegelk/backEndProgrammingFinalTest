@@ -17,6 +17,6 @@ Route::group([
     'middleware' => 'api',
 ], function() {
     Route::resources([
-        CategoryController::class
+        'categories' => CategoryController::class
     ]);
 });
