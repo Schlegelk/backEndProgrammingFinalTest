@@ -39,7 +39,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = Category::create($request->all());
+
+        return response()->json([
+            'data'=> $category // category kemungkinan belum di buat tablenya
+        ]);
     }
 
     /**
