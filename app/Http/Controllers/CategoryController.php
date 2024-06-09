@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct() {
+        $this->middleware("auth:api")->except(["index"]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -77,7 +80,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update($request->all());
+
+        return response()->json([
+            'message' => 'data successfully updated',
+            'data' => $category
+        ]);
     }
 
     /**
