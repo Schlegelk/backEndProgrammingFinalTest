@@ -46,7 +46,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'nama_kategori' => 'required',
             'deskripsi' => 'required',
@@ -151,7 +150,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json([
-            'message' => 'success'
+            'message' => 'category deleted'
         ]);
     }
 }
