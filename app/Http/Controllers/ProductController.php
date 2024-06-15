@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Slider;
+use App\Models\Product;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class SliderController extends Controller
+class ProductController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::all();
+        $products = Product::all();
 
         return response()->json([
-            'data' => $sliders
+            'data' => $products
         ]);
     }
 
@@ -47,7 +47,17 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
+            'id_kategori' => 'required',
+           'id_subkategori' => 'required',
+            'nama_barang' => 'required',
+            'harga' => 'required',
+            'diskon' => 'required',
+            'bahan'  => 'required',
+            'tags' => 'required',
+            'sku' => 'required',
+            'ukuran' => 'required',
+            'warna' => 'required',
+            'gambar' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
@@ -68,20 +78,20 @@ class SliderController extends Controller
             $input['gambar'] = $nama_gambar;
         }
 
-        $Slider = Slider::create($input);
+        $Product = Product::create($input);
 
         return response()->json([
-            'data' => $Slider
+            'data' => $Product
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Product  $Product
      * @return \Illuminate\Http\Response
      */
-    public function show(Slider $Slider)
+    public function show(Product $Product)
     {
         //
     }
@@ -89,10 +99,10 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Product  $Product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slider $Slider)
+    public function edit(Product $Product)
     {
         //
     }
@@ -101,14 +111,25 @@ class SliderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Product  $Product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Slider $Slider)
+    public function update(Request $request, Product $Product)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
-            'deskripsi' => 'required'
+            'id_kategori' => 'required',
+           'id_subkategori' => 'required',
+            'nama_barang' => 'required',
+            'harga' => 'required',
+            'diskon' => 'required',
+            'bahan'  => 'required',
+            'tags' => 'required',
+            'sku' => 'required',
+            'ukuran' => 'required',
+            'warna' => 'required',
+            'gambar' => 'required',
+            'deskripsi' => 'required',
+            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
 
         if($validator->fails()) {
@@ -121,7 +142,7 @@ class SliderController extends Controller
         $input = $request->all();
         
         if($request->has('gambar')) {
-            File::delete('uploads/' . $Slider->gambar);
+            File::delete('uploads/' . $Product->gambar);
             $gambar = $request->file('gambar');
             $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
             $gambar->move('uploads', $nama_gambar);
@@ -130,27 +151,27 @@ class SliderController extends Controller
             unset($input['gambar']);
         }
 
-        $Slider->update($input);
+        $Product->update($input);
 
         return response()->json([
             'message' => 'success',
-            'data' => $Slider
+            'data' => $Product
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Product  $Product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slider $Slider)
+    public function destroy(Product $Product)
     {
-        File::delete('uploads/' . $Slider->gambar);
-        $Slider->delete();
+        File::delete('uploads/' . $Product->gambar);
+        $Product->delete();
 
         return response()->json([
-            'message' => 'Slider deleted'
+            'message' => 'Product deleted'
         ]);
     }
 }
