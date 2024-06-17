@@ -65,14 +65,12 @@ class OrderController extends Controller
            OrderDetail::create([
               'id_order' => $Order['id'],
               'id_produk' => $input['id_produk'][$i],
+              'jumlah' => $input['jumlah'][$i],
               'size' => $input['size'][$i],
               'color' => $input['color'][$i],
               'total' => $input['total'][$i],
-           ]); # code...
+           ]);
         }
-
-
-
 
         return response()->json([
             'data' => $Order
@@ -130,10 +128,11 @@ class OrderController extends Controller
             OrderDetail::create([
                'id_order' => $Order['id'],
                'id_produk' => $input['id_produk'][$i],
+               'jumlah' => $input['jumlah'][$i],
                'size' => $input['size'][$i],
                'color' => $input['color'][$i],
                'total' => $input['total'][$i],
-            ]); # code...
+            ]);
          }
 
         return response()->json([
@@ -145,8 +144,8 @@ class OrderController extends Controller
 
     public function ubah_status(Request $request, Order $order)  
     {
-        $order->Update([
-            'stauts' => $request->status
+        $order->update([
+            'status' => $request->status
         ]);
           
         return response()->json([
@@ -159,7 +158,7 @@ class OrderController extends Controller
 
     public function dikonfirmasi() 
     {
-        $orders = Order::where('status', 'Dikonfirmasi')->get;
+        $orders = Order::where('status', 'Dikonfirmasi')->get();
 
         return response()->json([
            'data' => $orders
@@ -168,7 +167,7 @@ class OrderController extends Controller
 
     public function dikemas() 
     {
-        $orders = Order::where('status', 'Dikemas')->get;
+        $orders = Order::where('status', 'Dikemas')->get();
 
         return response()->json([
            'data' => $orders
@@ -177,7 +176,7 @@ class OrderController extends Controller
 
     public function dikirim() 
     {
-        $orders = Order::where('status', 'Dikirim')->get;
+        $orders = Order::where('status', 'Dikirim')->get();
 
         return response()->json([
            'data' => $orders
@@ -186,7 +185,7 @@ class OrderController extends Controller
 
     public function diterima() 
     {
-        $orders = Order::where('status', 'Diterima')->get;
+        $orders = Order::where('status', 'Diterima')->get();
 
         return response()->json([
            'data' => $orders
@@ -195,7 +194,7 @@ class OrderController extends Controller
 
     public function selesai() 
     {
-        $orders = Order::where('status', 'Selesai')->get;
+        $orders = Order::where('status', 'Selesai')->get();
 
         return response()->json([
            'data' => $orders
@@ -210,7 +209,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $Order)
     {
-        File::delete('uploads/' . $Order->gambar);
         $Order->delete();
 
         return response()->json([
