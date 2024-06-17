@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Slider;
+use App\Models\Testimoni;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class SliderController extends Controller
+class TestimoniController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::all();
+        $testimonis = Testimoni::all();
 
         return response()->json([
-            'data' => $sliders
+            'data' => $testimonis
         ]);
     }
 
@@ -47,7 +47,7 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
+            'nama_testimoni' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
@@ -68,20 +68,20 @@ class SliderController extends Controller
             $input['gambar'] = $nama_gambar;
         }
 
-        $Slider = Slider::create($input);
+        $Testimoni = Testimoni::create($input);
 
         return response()->json([
-            'data' => $Slider
+            'data' => $Testimoni
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Testimoni  $Testimoni
      * @return \Illuminate\Http\Response
      */
-    public function show(Slider $Slider)
+    public function show(Testimoni $Testimoni)
     {
         //
     }
@@ -89,10 +89,10 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Testimoni  $Testimoni
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slider $Slider)
+    public function edit(Testimoni $Testimoni)
     {
         //
     }
@@ -101,13 +101,13 @@ class SliderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Testimoni  $Testimoni
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Slider $Slider)
+    public function update(Request $request, Testimoni $Testimoni)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
+            'nama_testimoni' => 'required',
             'deskripsi' => 'required'
         ]);
 
@@ -121,7 +121,7 @@ class SliderController extends Controller
         $input = $request->all();
         
         if($request->has('gambar')) {
-            File::delete('uploads/' . $Slider->gambar);
+            File::delete('uploads/' . $Testimoni->gambar);
             $gambar = $request->file('gambar');
             $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
             $gambar->move('uploads', $nama_gambar);
@@ -130,27 +130,28 @@ class SliderController extends Controller
             unset($input['gambar']);
         }
 
-        $Slider->update($input);
+        $Testimoni->update($input);
 
         return response()->json([
             'message' => 'success',
-            'data' => $Slider
+            'data' => $Testimoni
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Testimoni  $Testimoni
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slider $Slider)
+    public function destroy(Testimoni $Testimoni)
     {
-        File::delete('uploads/' . $Slider->gambar);
-        $Slider->delete();
+        File::delete('uploads/' . $Testimoni->gambar);
+        $Testimoni->delete();
 
         return response()->json([
-            'message' => 'Slider deleted'
+            'message' => 'Testimoni deleted'
         ]);
     }
 }
+ 

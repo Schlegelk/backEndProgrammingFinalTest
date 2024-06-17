@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Slider;
+use App\Models\Review;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class SliderController extends Controller
+class ReviewController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::all();
+        $reviews = Review::all();
 
         return response()->json([
-            'data' => $sliders
+            'data' => $reviews
         ]);
     }
 
@@ -47,9 +47,10 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
+            'id_member' => 'required',
+            'id_produk' => 'required',
+            'review' => 'required',
+            'rating' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -60,28 +61,20 @@ class SliderController extends Controller
         }
 
         $input = $request->all();
-
-        if($request->has('gambar')) {
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
-            $gambar->move('uploads', $nama_gambar);
-            $input['gambar'] = $nama_gambar;
-        }
-
-        $Slider = Slider::create($input);
+        $Review = Review::create($input);
 
         return response()->json([
-            'data' => $Slider
+            'data' => $Review
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Review  $Review
      * @return \Illuminate\Http\Response
      */
-    public function show(Slider $Slider)
+    public function show(Review $Review)
     {
         //
     }
@@ -89,10 +82,10 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Review  $Review
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slider $Slider)
+    public function edit(Review $Review)
     {
         //
     }
@@ -101,14 +94,16 @@ class SliderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Review  $Review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Slider $Slider)
+    public function update(Request $request, Review $Review)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
-            'deskripsi' => 'required'
+            'id_member' => 'required',
+            'id_produk' => 'required',
+            'review' => 'required',
+            'rating' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -119,38 +114,27 @@ class SliderController extends Controller
         }
 
         $input = $request->all();
-        
-        if($request->has('gambar')) {
-            File::delete('uploads/' . $Slider->gambar);
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
-            $gambar->move('uploads', $nama_gambar);
-            $input['gambar'] = $nama_gambar;
-        } else {
-            unset($input['gambar']);
-        }
 
-        $Slider->update($input);
+        $Review->update($input);
 
         return response()->json([
             'message' => 'success',
-            'data' => $Slider
+            'data' => $Review
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Review  $Review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slider $Slider)
+    public function destroy(Review $Review)
     {
-        File::delete('uploads/' . $Slider->gambar);
-        $Slider->delete();
+        $Review->delete();
 
         return response()->json([
-            'message' => 'Slider deleted'
+            'message' => 'Review deleted'
         ]);
     }
 }

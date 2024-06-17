@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Slider;
+use App\Models\Member;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class SliderController extends Controller
+class MemberController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::all();
+        $members = Member::all();
 
         return response()->json([
-            'data' => $sliders
+            'data' => $categories
         ]);
     }
 
@@ -47,41 +47,38 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
+            'nama_member' => 'required',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'kecamatan' => 'required',
+            'detail_alamat' => 'required',
+            'no_hp' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
         if($validator->fails()) {
             return response()->json(
-                $validator->errors(), 
+                $validator->errors(),
                 422
             );
         }
 
         $input = $request->all();
-
-        if($request->has('gambar')) {
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
-            $gambar->move('uploads', $nama_gambar);
-            $input['gambar'] = $nama_gambar;
-        }
-
-        $Slider = Slider::create($input);
+        $Member = Member::create($input);
 
         return response()->json([
-            'data' => $Slider
+            'data' => $Member
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Member  $Member
      * @return \Illuminate\Http\Response
      */
-    public function show(Slider $Slider)
+    public function show(Member $Member)
     {
         //
     }
@@ -89,10 +86,10 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Member  $Member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slider $Slider)
+    public function edit(Member $Member)
     {
         //
     }
@@ -101,56 +98,51 @@ class SliderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Member  $Member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Slider $Slider)
+    public function update(Request $request, Member $Member)
     {
         $validator = Validator::make($request->all(), [
-            'nama_slider' => 'required',
-            'deskripsi' => 'required'
+            'nama_member' => 'required',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'kecamatan' => 'required',
+            'detail_alamat' => 'required',
+            'no_hp' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
         if($validator->fails()) {
             return response()->json(
-                $validator->errors(), 
+                $validator->errors(),
                 422
             );
         }
 
         $input = $request->all();
-        
-        if($request->has('gambar')) {
-            File::delete('uploads/' . $Slider->gambar);
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
-            $gambar->move('uploads', $nama_gambar);
-            $input['gambar'] = $nama_gambar;
-        } else {
-            unset($input['gambar']);
-        }
 
-        $Slider->update($input);
+        $Member->update($input);
 
         return response()->json([
             'message' => 'success',
-            'data' => $Slider
+            'data' => $Member
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Slider  $Slider
+     * @param  \App\Models\Member  $Member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slider $Slider)
+    public function destroy(Member $Member)
     {
-        File::delete('uploads/' . $Slider->gambar);
-        $Slider->delete();
+        $Member->delete();
 
         return response()->json([
-            'message' => 'Slider deleted'
+            'message' => 'Member deleted'
         ]);
     }
 }
