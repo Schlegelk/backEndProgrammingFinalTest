@@ -24,7 +24,7 @@ class MemberController extends Controller
         $members = Member::all();
 
         return response()->json([
-            'data' => $categories
+            'data' => $members
         ]);
     }
 
