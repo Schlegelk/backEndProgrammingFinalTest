@@ -12,7 +12,7 @@ class ReportController extends Controller
         $this->middleware('auth:api')->except('index');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $report = DB::table('orders_detail')
             ->join('products', 'products.id', 'orders_detail.id_produk')
@@ -22,6 +22,8 @@ class ReportController extends Controller
             harga,
             SUM(total) as pendapatan, 
             SUM(jumlah) as total_qty'))
+            ->whereRaw("date(orders_detail.created_at) >= '$request->dari'")
+            ->whereRaw("date(orders_detail.created_at) <= '$request->sampai'")
             ->groupBy('id_produk', 'nama_barang', 'harga')
             ->get();
 
