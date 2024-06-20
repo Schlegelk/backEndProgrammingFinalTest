@@ -83,7 +83,9 @@ class TestimoniController extends Controller
      */
     public function show(Testimoni $Testimoni)
     {
-        //
+        return response()->json([
+            'data'=>$Testimoni
+        ]);
     }
 
     /**
