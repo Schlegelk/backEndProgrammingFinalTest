@@ -53,8 +53,9 @@ class MemberController extends Controller
             'kecamatan' => 'required',
             'detail_alamat' => 'required',
             'no_hp' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|same:konfirmasi_password',
+            'konfirmasi_password' => 'required|same:password',
         ]);
 
         if($validator->fails()) {
@@ -65,6 +66,8 @@ class MemberController extends Controller
         }
 
         $input = $request->all();
+        $input['password'] = bcrypt($request->password);
+        unset($input['konfirmasi_password']);
         $Member = Member::create($input);
 
         return response()->json([
@@ -80,7 +83,9 @@ class MemberController extends Controller
      */
     public function show(Member $Member)
     {
-        //
+        return response()->json([
+            'data'=>$Member
+        ]);
     }
 
     /**
