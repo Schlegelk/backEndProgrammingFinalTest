@@ -57,7 +57,6 @@ class ProductController extends Controller
             'sku' => 'required',
             'ukuran' => 'required',
             'warna' => 'required',
-            'gambar' => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
