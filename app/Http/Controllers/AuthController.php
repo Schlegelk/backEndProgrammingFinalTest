@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        return view('auth.login');
+    }
+
     public function login ()
     {
         $credential = request(['email', 'password']);
@@ -81,19 +86,19 @@ class AuthController extends Controller
             if(Hash::check($request->password, $member->password)) {
                 $request->session()->regenerate();
                 return response()->json([
-                    'message' => 'success', 
+                    'message' => 'success',
                     'data' => $member
                 ]);
             } else {
                 return response()->json([
-                    'message' => 'failed', 
+                    'message' => 'failed',
                     'data' => 'Password is wrong'
                 ]);
             }
-            
+
         } else {
             return response()->json([
-                'message' => 'failed', 
+                'message' => 'failed',
                 'data' => 'Email is wrong'
             ]);
         }
@@ -105,7 +110,7 @@ class AuthController extends Controller
         auth()->logout();
         return response()->json(['message' => 'Succesfully logged out']);
     }
-    
+
     public function logout_member()
     {
         Session::flush();
