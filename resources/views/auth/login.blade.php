@@ -37,17 +37,37 @@
                             <div class="p-5">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    <p></p>
                                 </div>
-                                <form class="user">
+                                @if($errors->any())
+                                <div class ="alert alert-danger">
+                                    <strong>Gagal</strong>
+                                    <p>{{$errors->first()}}</p>
+                                </div>
+                                @endif
+                                <form class="user" method = "POST" action="/login">
+                                    @csrf
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                               placeholder="Enter Email Address...">
-                                    </div>
+                                               placeholder="Enter Email Address..." name="email" >
+                                        @error('email')
+                                        <small class="text-danger">
+                                        {{$message}}
+                                        </small>
+                                        @enderror
+                                        </div>
+                                    
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                               id="exampleInputPassword" placeholder="Password">
+                                               id="exampleInputPassword" placeholder="Password" name="password">
+                                        @error('password')
+                                        <small class="text-danger">
+                                        {{$message}}
+                                        </small>
+                                        @enderror
                                     </div>
+                                   
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
                                             <input type="checkbox" class="custom-control-input" id="customCheck">
@@ -55,9 +75,9 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <a href="/sbadmin2/index.html" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Login
-                                    </a>
+                                    </button>
                                 </form>
                             </div>
                         </div>

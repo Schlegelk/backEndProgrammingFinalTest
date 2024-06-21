@@ -10,6 +10,7 @@ Route::get('/', function () {
 });
 
 Route::post('login', [AuthController::class, 'login_member']);
-Route::post('login', [AuthController::class, 'login_member']);
-Route::post('login', [AuthController::class, 'index']);
-Route::post('/dashboard', [AuthController::class, 'index']);
+Route::post('logout', [AuthController::class, 'login_member']);
+
+Route::get('login', [AuthController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index']);
