@@ -10,7 +10,11 @@ Route::get('/', function () {
 });
 
 Route::post('login', [AuthController::class, 'login_member']);
+<<<<<<< HEAD
 Route::post('logout', [AuthController::class, 'login_member']);
 
 Route::get('login', [AuthController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
+=======
+Route::post('logout', [AuthController::class, 'logout_member']);
+>>>>>>> origin
