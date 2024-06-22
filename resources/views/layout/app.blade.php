@@ -12,13 +12,13 @@
     <title>@yield('title')</title>
 
     <!-- Custom fonts for this template-->
-    <link href="/sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="/sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -172,14 +172,14 @@
 </a>
 
 <!-- Bootstrap core JavaScript-->
-<script src="/sbadmin2/vendor/jquery/jquery.min.js"></script>
-<script src="/sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"></script>
+<script src="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="/sbadmin2/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="/sbadmin2/js/sb-admin-2.min.js"></script>
+<script src="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js"></script>
 
 </body>
 
