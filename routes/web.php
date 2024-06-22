@@ -9,8 +9,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('login', [AuthController::class, 'login_member']);
-Route::post('logout', [AuthController::class, 'login_member']);
-
-Route::get('login', [AuthController::class, 'index']);
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+Route::get('logout', [AuthController::class, 'logout']);
