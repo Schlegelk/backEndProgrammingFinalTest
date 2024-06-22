@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -12,8 +11,14 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index');
+        $this->middleware('auth' , ['except' => 'index' ]);
     }
+
+    public function list()
+    {
+        return view('kategori.index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +46,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,7 +57,7 @@ class CategoryController extends Controller
             'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json(
                 $validator->errors(), 
                 422
@@ -61,9 +66,9 @@ class CategoryController extends Controller
 
         $input = $request->all();
 
-        if($request->has('gambar')) {
+        if ($request->has('gambar')) {
             $gambar = $request->file('gambar');
-            $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
+            $nama_gambar = time() . rand(1, 9) . '.' . $gambar->getClientOriginalExtension();
             $gambar->move('uploads', $nama_gambar);
             $input['gambar'] = $nama_gambar;
         }
@@ -78,20 +83,20 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
     {
         return response()->json([
-            'data'=>$category
+            'data' => $category
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -102,8 +107,8 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
@@ -113,7 +118,7 @@ class CategoryController extends Controller
             'deskripsi' => 'required'
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json(
                 $validator->errors(), 
                 422
@@ -121,11 +126,11 @@ class CategoryController extends Controller
         }
 
         $input = $request->all();
-        
-        if($request->has('gambar')) {
+
+        if ($request->has('gambar')) {
             File::delete('uploads/' . $category->gambar);
             $gambar = $request->file('gambar');
-            $nama_gambar = time() . rand(1,9) . '.' . $gambar->getClientOriginalExtension();
+            $nama_gambar = time() . rand(1, 9) . '.' . $gambar->getClientOriginalExtension();
             $gambar->move('uploads', $nama_gambar);
             $input['gambar'] = $nama_gambar;
         } else {
@@ -143,7 +148,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)

@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <title>SB Admin 2 - Login</title>
 
@@ -26,7 +28,7 @@
 
 <div class="container">
 
-    <!-- Outer Row -->
+    <!-- Outer Row -->y6
     <div class="row justify-content-center">
 
         <div class="col-xl-6">
@@ -45,10 +47,10 @@
                                     <p>{{$errors->first()}}</p>
                                 </div>
                                 @endif
-                                <form class="user" method = "POST" action="/login">
+                                <form class="form-login user" method = "POST" action="/login">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user"
+                                        <input type="email" class="form-control form-control-user email"
                                                id="exampleInputEmail" aria-describedby="emailHelp"
                                                placeholder="Enter Email Address..." name="email" >
                                         @error('email')
@@ -59,7 +61,7 @@
                                         </div>
 
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user"
+                                        <input type="password" class="form-control form-control-user password"
                                                id="exampleInputPassword" placeholder="Password" name="password">
                                         @error('password')
                                         <small class="text-danger">
@@ -98,6 +100,49 @@
 <!-- Custom scripts for all pages-->
 <script src="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/sb-admin-2.min.js"></script>
 
-</body>
+<script>
+    $(function() { 
 
-</html>
+    function setCookie(name,value,days) {
+         var expires = "";
+         if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+         }
+         document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+         }
+          
+        $('.form-login').submit(function(e) { 
+            e.preventDefault();
+
+            const email = $('.email').val(); 
+            const password = $('.password').val(); 
+            const csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+            console.log(csrf_token);
+
+            $.ajax({
+                url: '/login',
+                type: 'POST',
+                data: { 
+                    email: email,
+                    password: password, 
+                    _token: csrf_token
+                },
+              
+                success: function(data) {
+                    if (!data.success) {
+                        alert(data.message);
+                    }
+
+
+
+                      localStorage.setItem('token', data.token)
+                      window.location.href = "/dashboard";
+                }
+            });
+        }); 
+    }); 
+</script>
+

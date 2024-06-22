@@ -16,23 +16,28 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login (Request $request)
+    public function login(Request $request)
     {
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $credential = request(['email', 'password']);
 
-        if(auth()->attempt($credential)) {
-            $token = Auth::guard('api')->attempt($credential);
+        $credentials = request(['email', 'password']);
 
-            cookie() ->queue(cookie('token', $token, 60));
-            return redirect('/dashboard');
+        if (auth()->attempt($credentials)) {   
+            $token = Auth::attempt($credentials);
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Berhasil',
+                'token' => $token
+            ]);
         }
 
-        return back()->withErrors(['error' => 'email atau password salah']);
-
+        return response()->json([
+            'success' => false,
+            'message' => 'Email atau password salah'
+        ]);
     }
 
     protected function respondWithToken($token)
