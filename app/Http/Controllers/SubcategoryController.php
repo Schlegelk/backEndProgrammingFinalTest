@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class SubcategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index');
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('api')->only(['store', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -21,12 +23,20 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        $subcategories = Subcategory::all();
+        $subcategories = Subcategory::with('category')->get();
+
 
         return response()->json([
             'data' => $subcategories
         ]);
     }
+
+    public function list()
+    {
+        $categories = Category::all();
+        return view('subkategori.index', compact('categories'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,7 +66,7 @@ class SubcategoryController extends Controller
 
         if($validator->fails()) {
             return response()->json(
-                $validator->errors(), 
+                $validator->errors(),
                 422
             );
         }
@@ -73,6 +83,7 @@ class SubcategoryController extends Controller
         $Subcategory = Subcategory::create($input);
 
         return response()->json([
+            'success' => true,
             'data' => $Subcategory
         ]);
     }
@@ -117,13 +128,13 @@ class SubcategoryController extends Controller
 
         if($validator->fails()) {
             return response()->json(
-                $validator->errors(), 
+                $validator->errors(),
                 422
             );
         }
 
         $input = $request->all();
-        
+
         if($request->has('gambar')) {
             File::delete('uploads/' . $Subcategory->gambar);
             $gambar = $request->file('gambar');
@@ -137,6 +148,7 @@ class SubcategoryController extends Controller
         $Subcategory->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'success',
             'data' => $Subcategory
         ]);
@@ -154,6 +166,7 @@ class SubcategoryController extends Controller
         $Subcategory->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'success'
         ]);
     }
