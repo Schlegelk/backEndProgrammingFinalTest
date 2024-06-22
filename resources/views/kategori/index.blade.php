@@ -35,7 +35,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Form Kategory</h5>
+                <h5 class="modal-title">Form Kategori</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -53,13 +53,13 @@
                             <label for="">
                                 Deskripsi
                             </label>
-                            <textarea name="deksripsi" placeholder="Deskripsi" class="form-control" id="" cols="30" rows="10" required></textarea>
+                            <textarea name="deskripsi" placeholder="Deskripsi" class="form-control" id="" cols="30" rows="10" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="">
                                 Gambar
                             </label>
-                            <input type="file" class="form-control" name=gambar" required>
+                            <input type="file" class="form-control" name="gambar" required>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -105,22 +105,21 @@
 
             $(document).on('click', '.btn-hapus', function(){
                 const id = $(this).data('id');
-                const token = localStorage.getItems('token')
+                const token = localStorage.getItem('token');
 
                 const confirm_dialog = confirm('Apakah anda yakin?');
-
 
                 if (confirm_dialog) {
                     $.ajax({
                         url : '/api/categories/' + id,
                         type : 'DELETE',
                         headers: {
-                            "Authorization":  token
+                            "Authorization": `Bearer ${token}`
                         },
                         success : function(data){
-                            if (data.message == 'success') {
-                                alert('Data berhasil dihapus')
-                                location.reload()
+                            if (data.success) {
+                                alert('Data berhasil dihapus');
+                                location.reload();
                             }
                         }
                     });
@@ -128,37 +127,37 @@
             });
 
             $('.modal-tambah').click(function(){
-                $('#modal-form').modal('show')
+                $('#modal-form').modal('show');
 
                 $('.form-kategori').submit(function(e){
-                    e.preventDefault()
-                    const token = localStorage.getItem('token')
+                    e.preventDefault();
+                    const token = localStorage.getItem('token');
 
                     const frmdata = new FormData(this);
 
-                   $.ajax({
-                       url : 'api/categories',
-                       type : 'POST',
-                       data : frmdata,
-                       cache: false,
-                       contentType: false,
-                       processData: false,
-                       headers: {
-                           "Authorization": token
-                       },
-                       success : function(data) {
+                    $.ajax({
+                        url : '/api/categories',
+                        type : 'POST',
+                        data : frmdata,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        },
+                        success : function(data) {
                             if (data.success) {
-                                alert('Data berhasil ditambah')
+                                alert('Data berhasil ditambah');
                                 location.reload();
                             }
-                       }
-                   })
+                        }
+                    });
                 });
             });
 
             $(document).on('click', '.modal-ubah', function(){
-                $('#modal-form').modal('show')
-            })
+                $('#modal-form').modal('show');
+            });
 
         });
     </script>
