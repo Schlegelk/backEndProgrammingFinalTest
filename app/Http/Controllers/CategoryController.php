@@ -11,11 +11,13 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth' , ['except' => 'index' ]);
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('api')->only(['store', 'update', 'delete']);
     }
 
     public function list()
     {
+        $this->middleware('auth');
         return view('kategori.index');
     }
 
@@ -59,7 +61,7 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                $validator->errors(), 
+                $validator->errors(),
                 422
             );
         }
@@ -76,6 +78,7 @@ class CategoryController extends Controller
         $category = Category::create($input);
 
         return response()->json([
+            'success' => true,
             'data' => $category
         ]);
     }
@@ -120,7 +123,7 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                $validator->errors(), 
+                $validator->errors(),
                 422
             );
         }
@@ -140,6 +143,7 @@ class CategoryController extends Controller
         $category->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'success',
             'data' => $category
         ]);
@@ -157,6 +161,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'category deleted'
         ]);
     }
