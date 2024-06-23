@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,8 +20,10 @@ class ProductController extends Controller
 
     public function list()
     {
-        $products = Product::all();
-        return view('product.index', compact('products'));
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+
+        return view('product.index', compact('categories', 'subcategories'));
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +32,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category', 'subcategory')->get();
 
         return response()->json([
             'success' => true,

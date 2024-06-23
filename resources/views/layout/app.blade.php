@@ -35,7 +35,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">NGONFIG</div>
+            <div class="sidebar-brand-text mx-3">E-Shop</div>
         </a>
 
         <!-- Divider -->
@@ -60,7 +60,6 @@
                     <a class="collapse-item" href="/slider">Data Slider</a>
                     <a class="collapse-item" href="/barang">Data Barang</a>
                     <a class="collapse-item" href="/testimoni">Data Testimoni</a>
-                    <a class="collapse-item" href="/reviews">Data Reviews</a>
                 </div>
             </div>
         </li>
