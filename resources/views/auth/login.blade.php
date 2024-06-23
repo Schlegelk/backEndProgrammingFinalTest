@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="sbadmin2/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.css" rel="stylesheet" type="text/css">
@@ -28,7 +28,7 @@
 
 <div class="container">
 
-    <!-- Outer Row -->y6
+    <!-- Outer Row -->
     <div class="row justify-content-center">
 
         <div class="col-xl-6">
@@ -58,7 +58,7 @@
                                         {{$message}}
                                         </small>
                                         @enderror
-                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user password"
@@ -120,8 +120,6 @@
             const password = $('.password').val(); 
             const csrf_token = $('meta[name="csrf-token"]').attr('content');
 
-            console.log(csrf_token);
-
             $.ajax({
                 url: '/login',
                 type: 'POST',
@@ -135,9 +133,6 @@
                     if (!data.success) {
                         alert(data.message);
                     }
-
-
-
                       localStorage.setItem('token', data.token)
                       window.location.href = "/dashboard";
                 }

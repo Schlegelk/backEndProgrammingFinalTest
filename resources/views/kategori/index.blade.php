@@ -59,7 +59,7 @@
                             <label for="">
                                 Gambar
                             </label>
-                            <input type="file" class="form-control" name="gambar" required>
+                            <input type="file" class="form-control" name="gambar">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -128,6 +128,8 @@
 
             $('.modal-tambah').click(function(){
                 $('#modal-form').modal('show');
+                $('input[name="nama_kategori"]').val('')
+                $('textarea[name="deskripsi"]').val('')
 
                 $('.form-kategori').submit(function(e){
                     e.preventDefault();
@@ -157,6 +159,37 @@
 
             $(document).on('click', '.modal-ubah', function(){
                 $('#modal-form').modal('show');
+                const id = $(this).data('id');
+
+                $.get('api/categories/' + id, function({data}){
+                    $('input[name="nama_kategori"]').val(data.nama_kategori);
+                    $('textarea[name="deskripsi"]').val(data.deskripsi);
+                });
+
+                $('.form-kategori').submit(function(e){
+                    e.preventDefault();
+                    const token = localStorage.getItem('token');
+
+                    const frmdata = new FormData(this);
+
+                    $.ajax({
+                        url : `/api/categories/${id}?_method=PUT`,
+                        type : 'POST',
+                        data : frmdata,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        },
+                        success : function(data) {
+                            if (data.success) {
+                                alert('Data berhasil diubah');
+                                location.reload();
+                            }
+                        }
+                    });
+                });
             });
 
         });

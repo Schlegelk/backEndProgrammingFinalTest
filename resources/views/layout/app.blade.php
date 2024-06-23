@@ -35,7 +35,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">NGONFIG</div>
+            <div class="sidebar-brand-text mx-3">E-Shop</div>
         </a>
 
         <!-- Divider -->
@@ -59,16 +59,14 @@
                     <a class="collapse-item" href="/subkategori">Data Subkategori</a>
                     <a class="collapse-item" href="/slider">Data Slider</a>
                     <a class="collapse-item" href="/barang">Data Barang</a>
-                    <a class="collapse-item" href="/member">Data Member</a>
                     <a class="collapse-item" href="/testimoni">Data Testimoni</a>
-                    <a class="collapse-item" href="/reviews">Data Reviews</a>
                 </div>
             </div>
         </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pesanan"
                aria-expanded="true" aria-controls="pesanan">
-                <i class="fas fa-fw fa-shopping-Pesanan"></i>
+                <i class="fas fa-fw fa-shopping-cart"></i>
                 <span>Data Pesanan</span>
             </a>
             <div id="pesanan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -121,7 +119,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                             <img class="img-profile rounded-circle"
-                                 src="/sbadmin2/img/undraw_profile.svg">
+                                 src="/sbadmin2/startbootstrap-sb-admin-2-gh-pages/img/undraw_profile.svg">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
