@@ -122,7 +122,7 @@
                             <label for="">
                                 Deskripsi
                             </label>
-                            <textarea name="deskripsi" placeholder="Deskripsi" class="form-control" id="" cols="30" rows="10" required></textarea>
+                            <textarea name="deskripsi" placeholder="Deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="">
@@ -246,16 +246,17 @@
                 const id = $(this).data('id');
 
                 $.get('api/products/' + id, function({data}){
+                    $('select[name="nama_kategori"]').val(data.nama_kategori);
+                    $('select[name="nama_subkategori"]').val(data.nama_subkategori);
                     $('input[name="nama_barang"]').val(data.nama_barang);
                     $('input[name="harga"]').val(data.harga);
                     $('input[name="diskon"]').val(data.diskon);
                     $('input[name="bahan"]').val(data.bahan);
                     $('input[name="sku"]').val(data.sku);
+                    $('input[name="tags"]').val(data.tags);
                     $('input[name="ukuran"]').val(data.ukuran);
                     $('input[name="warna"]').val(data.warna);
-                    $('input[name="deskripsi"]').val(data.deskripsi);
-                    $('select[name="nama_kategori"]').val(data.category.nama_kategori);
-                    $('select[name="nama_subkategori"]').val(data.subcategory.nama_subkategori);
+                    $('textarea[name="deskripsi"]').val(data.deskripsi);
                 });
 
                 $('.form-product').submit(function(e){
