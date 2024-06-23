@@ -12,7 +12,14 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index');
+        $this->middleware('auth')->only(['list']);
+        $this->middleware('api')->only(['store', 'update', 'destroy']);
+    }
+
+    public function list()
+    {
+        $products = Product::all();
+        return view('product.index', compact('products'));
     }
     /**
      * Display a listing of the resource.
@@ -24,6 +31,7 @@ class ProductController extends Controller
         $products = Product::all();
 
         return response()->json([
+            'success' => true,
             'data' => $products
         ]);
     }
@@ -80,6 +88,7 @@ class ProductController extends Controller
         $Product = Product::create($input);
 
         return response()->json([
+            'success' => true,
             'data' => $Product
         ]);
     }
@@ -93,6 +102,7 @@ class ProductController extends Controller
     public function show(Product $Product)
     {
         return response()->json([
+            'success' => true,
             'data'=>$Product
         ]);
     }
@@ -155,6 +165,7 @@ class ProductController extends Controller
         $Product->update($input);
 
         return response()->json([
+            'success' => true,
             'message' => 'success',
             'data' => $Product
         ]);
@@ -172,6 +183,7 @@ class ProductController extends Controller
         $Product->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'Product deleted'
         ]);
     }
