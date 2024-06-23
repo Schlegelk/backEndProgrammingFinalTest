@@ -11,15 +11,33 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function login ()
+    public function index()
     {
-        $credential = request(['email', 'password']);
+        return view('auth.login');
+    }
 
-        if(!$token = auth()->attempt($credential)) {
-            return response()->json(['Email or password is wrong'], 401);
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = request(['email', 'password']);
+
+        if (auth()->attempt($credentials)) {   
+            $token = Auth::attempt($credentials);
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Berhasil',
+                'token' => $token
+            ]);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json([
+            'success' => false,
+            'message' => 'Email atau password salah'
+        ]);
     }
 
     protected function respondWithToken($token)
@@ -81,19 +99,19 @@ class AuthController extends Controller
             if(Hash::check($request->password, $member->password)) {
                 $request->session()->regenerate();
                 return response()->json([
-                    'message' => 'success', 
+                    'message' => 'success',
                     'data' => $member
                 ]);
             } else {
                 return response()->json([
-                    'message' => 'failed', 
+                    'message' => 'failed',
                     'data' => 'Password is wrong'
                 ]);
             }
-            
+
         } else {
             return response()->json([
-                'message' => 'failed', 
+                'message' => 'failed',
                 'data' => 'Email is wrong'
             ]);
         }
@@ -102,13 +120,13 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
-        return response()->json(['message' => 'Succesfully logged out']);
+        Session::flush();
+        return redirect('/login');
     }
-    
+
     public function logout_member()
     {
         Session::flush();
-        redirect('/login');
+        return redirect('/login_member');
     }
 }

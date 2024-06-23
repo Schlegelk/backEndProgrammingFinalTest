@@ -18,7 +18,7 @@ Route::group([
     'prefix' => 'auth'
 ], function(){
     Route::post('admin', [AuthController::class, 'login'])->name('login');
-    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('register', [AuthController::class, 'register']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 });
