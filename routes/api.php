@@ -29,12 +29,14 @@ Route::group([
     
 ], function() {
     // Routes for specific order statuses
-    Route::get('order/dikonfirmasi', [OrderController::class, 'dikonfirmasi']);
-    Route::get('order/dikemas', [OrderController::class, 'dikemas']);
-    Route::get('order/dikirim', [OrderController::class, 'dikirim']);
-    Route::get('order/diterima', [OrderController::class, 'diterima']);
-    Route::get('order/selesai', [OrderController::class, 'selesai']);
-    Route::post('order/ubah_status/{order}', [OrderController::class, 'ubah_status'])->name('order.ubah_status');
+    Route::get('pesanan/baru', [OrderController::class, 'baru']);
+    Route::get('pesanan/dikonfirmasi', [OrderController::class, 'dikonfirmasi']);
+    Route::get('pesanan/dikemas', [OrderController::class, 'dikemas']);
+    Route::get('pesanan/dikirim', [OrderController::class, 'dikirim']);
+    Route::get('pesanan/diterima', [OrderController::class, 'diterima']);
+    Route::get('pesanan/selesai', [OrderController::class, 'selesai']);
+    
+    Route::post('pesanan/ubah_status/{order}', [OrderController::class, 'ubah_status']);
 
     Route::get('reports', [ReportController::class, 'index']);
 
