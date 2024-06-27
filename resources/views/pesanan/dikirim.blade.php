@@ -11,9 +11,6 @@
          </h4>
     </div>
     <div class="card-body">
-        <div class="d-flex justify-content-end mb-4">
-            <a href="#modal-form" data-toggle="modal" class="btn btn-primary modal-tambah">Tambah Data</a>
-        </div>
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
                 <thead>
