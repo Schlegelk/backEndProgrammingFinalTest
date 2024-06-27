@@ -21,7 +21,8 @@
                 </div>
                 <div class="form-group">
                     <label for="">Sampai</label>
-                    <input type="date" name="sampai" id="sampai" class="form-control">
+                    <input type="date" name="sampai" id="sampai" class="form-control"
+                    value="{{request()->input('sampai')}}">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -68,7 +69,7 @@
 
             const token = localStorage.getItem('token');
             $.ajax({
-                url: `/api/reports?dari-${dari}&sampai-${sampai}`,
+                url: `/api/reports?dari=${dari}&sampai=${sampai}`,
                 headers: {
                             "Authorization": `Bearer ${token}`
                         },
