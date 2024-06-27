@@ -37,7 +37,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => false,
             'message' => 'Email atau password salah'
-        ]);
+        ], 401);
     }
 
     protected function respondWithToken($token)
