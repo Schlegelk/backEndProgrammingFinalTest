@@ -9,10 +9,11 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index');
+        $this->middleware('auth')->only(['index']);
+        $this->middleware('api')->only(['get_reports']);
     }
 
-    public function index(Request $request)
+    public function get_reports(Request $request)
     {
         $report = DB::table('orders_detail')
             ->join('products', 'products.id', 'orders_detail.id_produk')
@@ -24,12 +25,17 @@ class ReportController extends Controller
             SUM(jumlah) as total_qty'))
             ->whereRaw("date(orders_detail.created_at) >= '$request->dari'")
             ->whereRaw("date(orders_detail.created_at) <= '$request->sampai'")
-            ->groupBy('id_produk', 'nama_barang', 'harga')
+            ->groupBy('id_produk', 'nama_barang', 'harga', 'products.id')
             ->get();
 
         return response()->json([
             'data' => $report
         ]);
 
+    }
+
+    public function index(Request $request)
+    {
+       return view('report.index');
     }
 }
