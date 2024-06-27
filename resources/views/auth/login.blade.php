@@ -54,9 +54,9 @@
                                                id="exampleInputEmail" aria-describedby="emailHelp"
                                                placeholder="Enter Email Address..." name="email" >
                                         @error('email')
-                                        <small class="text-danger">
-                                        {{$message}}
-                                        </small>
+                                            <small class="text-danger">
+                                                {{$message}}
+                                            </small>
                                         @enderror
                                     </div>
 
@@ -64,9 +64,9 @@
                                         <input type="password" class="form-control form-control-user password"
                                                id="exampleInputPassword" placeholder="Password" name="password">
                                         @error('password')
-                                        <small class="text-danger">
-                                        {{$message}}
-                                        </small>
+                                            <small class="text-danger">
+                                                {{$message}}
+                                            </small>
                                         @enderror
                                     </div>
 
