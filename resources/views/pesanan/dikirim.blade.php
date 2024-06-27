@@ -43,7 +43,7 @@
             }
 
             function date(date){
-                var date = new date(date);
+                var date = new Date(date);
                 var day = date.getDate();
                 var month = date.getMonth();
                 var year = date.getFullYear();
