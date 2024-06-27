@@ -43,7 +43,7 @@
             }
 
             function date(date){
-                var date = new date(date);
+                var date = new Date(date);
                 var day = date.getDate();
                 var month = date.getMonth();
                 var year = date.getFullYear();
@@ -91,7 +91,7 @@
                         status : 'Selesai'
                     },
                     headers: {
-                            "Authorization": 'Bearer' + token
+                            "Authorization": `Bearer ${token}`
                     },
                     success : function (data){
                         location.reload()

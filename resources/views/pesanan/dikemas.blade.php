@@ -88,10 +88,10 @@
                     url: '/api/pesanan/ubah_status/' + id,
                     type : 'POST',
                     data : {
-                        status : 'Kirim'
+                        status : 'Dikirim'
                     },
                     headers: {
-                            "Authorization": 'Bearer' + token
+                            "Authorization": `Bearer ${token}`
                     },
                     success : function (data){
                         location.reload()
