@@ -130,7 +130,7 @@
                 },
               
                 success: function(data) {
-                    if (!data.success) {
+                    if (data.success == false) {
                         alert(data.message);
                     }
                       localStorage.setItem('token', data.token)
