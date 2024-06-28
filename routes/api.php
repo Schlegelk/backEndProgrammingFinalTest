@@ -38,7 +38,7 @@ Route::group([
     
     Route::post('pesanan/ubah_status/{order}', [OrderController::class, 'ubah_status']);
 
-    Route::get('reports', [ReportController::class, 'index']);
+    Route::get('reports', [ReportController::class, 'get_reports']);
 
     // Resourceful routes for other controllers
     Route::resources([

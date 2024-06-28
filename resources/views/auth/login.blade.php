@@ -42,7 +42,7 @@
                                     <p></p>
                                 </div>
                                 @if($errors->any())
-                                <div class ="alert alert-danger">
+                                <div id="alert" class ="alert alert-danger">
                                     <strong>Gagal</strong>
                                     <p>{{$errors->first()}}</p>
                                 </div>
@@ -130,7 +130,7 @@
                 },
               
                 success: function(data) {
-                    if (!data.success) {
+                    if (data.success == false) {
                         alert(data.message);
                     }
                       localStorage.setItem('token', data.token)
